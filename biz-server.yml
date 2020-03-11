@@ -1,0 +1,50 @@
+
+--- 
+spring:
+  profiles: biz1
+  
+server:
+  port: ${PORT:8081}
+  context-path: /andy-luo
+  
+eureka:
+  instance:
+    metadata-map:
+      zone: zone1
+    lease-renewal-interval-in-seconds: 5      # 心跳时间间隔：5秒。【租约续订间隔（秒）】
+    lease-expiration-duration-in-seconds: 5   # 从注册表中删除实例等待的秒数：5秒。【租约到期时间（秒）】
+  client:
+    service-url:
+      defaultZone: http://localhost1:8761/eureka/,http://localhost2:8762/eureka/,http://localhost3:8763/eureka/
+      
+---
+spring:
+  profiles: biz2
+  
+server:
+  port: ${PORT:8082}                    
+    
+eureka:
+  instance:
+    metadata-map:
+      zone: zone2
+  client:
+    service-url:
+      defaultZone: http://localhost2:8762/eureka/,http://localhost1:8761/eureka/,http://localhost3:8763/eureka/
+      
+---
+spring:
+  profiles: biz3
+  
+server:
+  port: ${PORT:8083}             
+    
+eureka:
+  instance:
+    metadata-map:
+      zone: zone3
+  client:
+    service-url:
+      defaultZone: http://localhost3:8763/eureka/,http://localhost1:8761/eureka/,http://localhost2:8762/eureka/    
+          
+    
